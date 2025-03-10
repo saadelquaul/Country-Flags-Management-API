@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
-use App\Http\Requests\StoreCountryRequest;
-use App\Http\Requests\UpdateCountryRequest;
+use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
@@ -13,15 +12,25 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        return Country::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCountryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'capital' => 'required|max:255',
+            'population' => 'required|numeric',
+            'region' => 'required|max:255',
+            'flag' => 'required|max:255',
+            'currency' => 'required|max:255',
+            'language' => 'required|max:255'
+        ]);
+        return Country::create($request->all());
+
     }
 
     /**
@@ -29,15 +38,25 @@ class CountryController extends Controller
      */
     public function show(Country $country)
     {
-        //
+        return $country;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCountryRequest $request, Country $country)
+    public function update(Request $request, Country $country)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'capital' => 'required|max:255',
+            'population' => 'required|numeric',
+            'region' => 'required|max:255',
+            'flag' => 'required|max:255',
+            'currency' => 'required|max:255',
+            'language' => 'required|max:255'
+        ]);
+        $country->update($request->all());
+        return $country;
     }
 
     /**
@@ -45,6 +64,7 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
-        //
+        $country->delete();
+        return response()->json();
     }
 }

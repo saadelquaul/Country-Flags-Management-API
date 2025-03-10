@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::get('/', function (Request $request) {
-    return 'API';
-});
+Route::apiResource('countries', 'App\Http\Controllers\CountryController');
+
+
+
